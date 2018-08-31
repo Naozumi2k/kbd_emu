@@ -9,17 +9,17 @@ DLLEXPORT DWORD Initialize(LPCSTR zsPort, DWORD x, DWORD y){
 	TCHAR szBuffer[128] = {0};
 	TCHAR szCoordBuffer[32] = {0};
 	COMMTIMEOUTS CommTimeOuts;
-    DCB dcb;
-    DWORD SizeBuffer = 1200;
-    
+	DCB dcb;
+	DWORD SizeBuffer = 1200;
+	
     if(hCom)
     	return 1;
 	
 	lstrcat(zsComPort, "\\\\.\\");
 	lstrcat(zsComPort, zsPort);
 	
-    hCom = CreateFile(zsComPort, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
-    SetupComm(hCom, SizeBuffer, SizeBuffer);
+	hCom = CreateFile(zsComPort, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+	SetupComm(hCom, SizeBuffer, SizeBuffer);
     GetCommState(hCom, &dcb);
  
     if(hCom == INVALID_HANDLE_VALUE){
