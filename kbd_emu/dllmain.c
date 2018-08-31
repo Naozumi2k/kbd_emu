@@ -12,48 +12,48 @@ DLLEXPORT DWORD Initialize(LPCSTR zsPort, DWORD x, DWORD y){
 	DCB dcb;
 	DWORD SizeBuffer = 1200;
 	
-    if(hCom)
-    	return 1;
+	if(hCom)
+		return 1;
 	
 	lstrcat(zsComPort, "\\\\.\\");
 	lstrcat(zsComPort, zsPort);
 	
 	hCom = CreateFile(zsComPort, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 	SetupComm(hCom, SizeBuffer, SizeBuffer);
-    GetCommState(hCom, &dcb);
+	GetCommState(hCom, &dcb);
  
-    if(hCom == INVALID_HANDLE_VALUE){
-       return 0;
-    }
+	if(hCom == INVALID_HANDLE_VALUE){
+	   return 0;
+	}
  
-    dcb.BaudRate = CBR_115200;
-    dcb.fBinary = TRUE;
-    dcb.fOutxCtsFlow = FALSE;
-    dcb.fOutxDsrFlow = FALSE;
-    dcb.fDtrControl = DTR_CONTROL_HANDSHAKE;
-    dcb.fDsrSensitivity = FALSE;
-    dcb.fNull = FALSE;
-    dcb.fRtsControl = RTS_CONTROL_DISABLE;
-    dcb.fAbortOnError = FALSE;
-    dcb.ByteSize = 8;
-    dcb.Parity = NOPARITY;
-    dcb.StopBits = 1;
-    SetCommState(hCom, &dcb);
+	dcb.BaudRate = CBR_115200;
+	dcb.fBinary = TRUE;
+	dcb.fOutxCtsFlow = FALSE;
+	dcb.fOutxDsrFlow = FALSE;
+	dcb.fDtrControl = DTR_CONTROL_HANDSHAKE;
+	dcb.fDsrSensitivity = FALSE;
+	dcb.fNull = FALSE;
+	dcb.fRtsControl = RTS_CONTROL_DISABLE;
+	dcb.fAbortOnError = FALSE;
+	dcb.ByteSize = 8;
+	dcb.Parity = NOPARITY;
+	dcb.StopBits = 1;
+	SetCommState(hCom, &dcb);
  
-    CommTimeOuts.ReadIntervalTimeout= 10;
-    CommTimeOuts.ReadTotalTimeoutMultiplier = 2;	
-    CommTimeOuts.ReadTotalTimeoutConstant = 100;
-    CommTimeOuts.WriteTotalTimeoutMultiplier = 0;
-    CommTimeOuts.WriteTotalTimeoutConstant = 0;
-    SetCommTimeouts(hCom, &CommTimeOuts);
-    
+	CommTimeOuts.ReadIntervalTimeout= 10;
+	CommTimeOuts.ReadTotalTimeoutMultiplier = 2;	
+	CommTimeOuts.ReadTotalTimeoutConstant = 100;
+	CommTimeOuts.WriteTotalTimeoutMultiplier = 0;
+	CommTimeOuts.WriteTotalTimeoutConstant = 0;
+	SetCommTimeouts(hCom, &CommTimeOuts);
+	
 	lstrcat(szBuffer, "ST ");
 	_itoa(x, szCoordBuffer, 10);
 	lstrcat(szBuffer, szCoordBuffer);
 	lstrcat(szBuffer, " ");
 	_itoa(y, szCoordBuffer, 10);
 	lstrcat(szBuffer, szCoordBuffer);
-    
+	
 	return WriteCom(szBuffer, strlen(szBuffer)+1);
 }
 
@@ -99,11 +99,11 @@ DLLEXPORT DWORD MouseClick(DWORD x, DWORD y){
 DWORD WriteCom(LPSTR lpBuffer, DWORD dwSize){
 	extern HANDLE hCom;
 	DWORD dwWritten;
-    COMSTAT ComState;
-    
-    if(!hCom || hCom == INVALID_HANDLE_VALUE) return 0;
-    
-    WriteFile(hCom, lpBuffer, dwSize, &dwWritten, NULL);
+	COMSTAT ComState;
+	
+	if(!hCom || hCom == INVALID_HANDLE_VALUE) return 0;
+	
+	WriteFile(hCom, lpBuffer, dwSize, &dwWritten, NULL);
 
 	return dwWritten;
 }
