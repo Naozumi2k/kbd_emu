@@ -5,7 +5,7 @@ Arduino ATmega32u4 hardware keyboard and mouse input emulator.
 ![Arduino PRO Micro](https://all-arduino.ru/wp-content/uploads/vyrn_181arduinomicro.png)
 
 
-There are the Arduino IDE sketch and Dev-C++ DLL project to communicate with Arduino using COM port.  
+There are the Arduino IDE sketch and Dev-C++ project with DLL to communicate with Arduino using COM port.  
 DLL can be compiled with Dev-C++ http://orwelldevcpp.blogspot.com/  
 Also there is ready to use with 32-bit apps DLL: https://github.com/Naozumi2k/kbd_emu/releases  
 
